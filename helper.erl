@@ -1,6 +1,7 @@
 -module(helper).
--export([calculate_pairs/2, push_data/4]).
+-export([calculate_pairs/2, push_data/4,push_data/3]).
 -import(blockstripe, []).
+-import(fox,[]).
 
 calculate_pairs(A, B) ->
     Alist = lists:seq(1, A),
@@ -16,3 +17,9 @@ push_data(seq, L, M, N) ->
     A = [[rand:uniform(21)/7 || _ <- lists:seq(1, M)] || _ <- lists:seq(1, L)],
     B = [[rand:uniform(21)/7 || _ <- lists:seq(1, N)] || _ <- lists:seq(1, M)],
     element(1, timer:tc(matrix, dot, [A, B])).
+
+push_data(fox,N,P)->
+    A = [[rand:uniform(21)/7 || _ <- lists:seq(1, N)] || _ <- lists:seq(1, N)],
+    B = [[rand:uniform(21)/7 || _ <- lists:seq(1, N)] || _ <- lists:seq(1, N)],
+    fox:calculate(N,A,B,P).
+

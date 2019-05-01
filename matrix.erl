@@ -1,7 +1,7 @@
 -module(matrix).
 -export([multiply/2, divide/2, difference/2, sum/2,
         transpose/1, dot/2, read/2, readmat/1, row/2,
-        col/2, new/2, get/3, set/4]).
+        col/2, new/2, get/3, set/4, add/2, submatrix/4] ).
 -import(vector, []).
 
 transpose([[]|_]) -> [];
@@ -61,3 +61,12 @@ set(RowI, ColI, Ele, A) ->
     Row = array:get(RowI, A),
     Row2 = array:set(ColI, Ele, Row),
     array:set(RowI, Row2, A).
+
+
+add( A, B ) -> add(A, B, []).
+add( [], [], Acc) -> lists:reverse(Acc);
+add( [A1 | ARest], [B1 | BRest], Acc)->
+    add(ARest, BRest, [vector:sum(A1,B1) | Acc]).
+
+submatrix( A, Row, Col, P) ->
+    [ lists:sublist(H, (Col-1)*P + 1, P) || H <-(lists:sublist(A,(Row-1)*P+1,P))].
